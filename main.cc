@@ -32,8 +32,8 @@ int main(int argc, char** argv) {
     sdl::SDLinit init(SDL_INIT_EVERYTHING);
 
     // create window and renderer
-    int w = 850;
-    int h = 650;
+    int w = 1700;
+    int h = 1300;
     sdl::Window win("Reactor", w, h, 0);
     win.Center();
     win.Show();
@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
     phys::Fuel fuel8(&fuel1);
     phys::Fuel fuel9(&fuel1);
 
-    phys::Object::Rect r5{w/2 + 130, h/2 + 40, 40, 40};
+    phys::Object::Rect r5{w/2 + 130, h/2 + 40, 80, 80};
     phys::Detector detector1;
     detector1.Init(r5, sdl::Color::yellow());
     phys::Detector detector2(&detector1);
