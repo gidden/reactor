@@ -15,6 +15,7 @@
 #include "sdl/texture.h"
 #include "sdl/surface.h"
 #include "sdl/font.h"
+#include "sdl/bar.h"
 
 #include "phys/system.h"
 #include "phys/object.h"
@@ -67,8 +68,10 @@ void LoadFont(sdl::Font* font) {
 
 class SysView {
  public:
-  SysView(const phys::System* sys, sdl::Renderer* ren) : sys_(sys), ren_(ren) {
+   SysView(const phys::System* sys, sdl::Renderer* ren) : sys_(sys), ren_(ren) {
     LoadFont(&font_);
+    sdl::Bar::Rect rec_p{840, 0, 10, 650};
+    palette_ = sdl::Bar(rec_p, sdl::Color::white());
     bg_color_ = sdl::Color::black();
     neut_color_ = sdl::Color::red();
     font_color_ = sdl::Color::yellow();
@@ -82,11 +85,19 @@ class SysView {
     DrawNeutrons();
     DrawDetectors();
     DrawInfo(fps);
+    DrawPalette();
 
     ren_->Render();
   };
-
+  
  private:
+  void DrawPalette() {
+    sdl::Surface* surf = palette_.surface();
+    phys::Object::Rect r = palette_.rect();
+    sdl::Texture tex(*ren_, *surf);
+    tex.ApplyFull(r.x, r.y);
+  };
+  
   void DrawMaterials() {
     const std::vector<phys::Object*> objs = sys_->objects();
     for (int i = 0; i < objs.size(); ++i) {
@@ -159,6 +170,8 @@ class SysView {
   const phys::System* sys_;
   sdl::Renderer* ren_;
   sdl::Font font_;
+
+  sdl::Bar palette_;
 };
 
 } // namespace draw

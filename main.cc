@@ -10,6 +10,7 @@
 #include "sdl/sdl_init.h"
 #include "sdl/color.h"
 #include "sdl/timer.h"
+#include "sdl/bar.h"
 
 #include "phys/system.h"
 #include "phys/basic_material.h"
@@ -39,7 +40,7 @@ int main(int argc, char** argv) {
     win.Center();
     win.Show();
     sdl::Renderer ren(win, SDL_RENDERER_ACCELERATED);
-
+    
     // create material geometry
     phys::BasicMaterial reflector1{0, 0, .1, 1, 0};
     phys::Object::Rect r1{w/2 - 40, h/2 - 40, 120, 120};
@@ -93,7 +94,8 @@ int main(int argc, char** argv) {
     stream1.Init(r7, sdl::Color::olive());
 
     // create system and a view for drawing it
-    phys::System sys(w, h);
+    int palette_x = 200; // x loc of pallette
+    phys::System sys(w - palette_x, h);
     sys.AddObject(&reflector1);
     sys.AddObject(&reflector2);
     sys.AddObject(&reflector3);
@@ -123,7 +125,7 @@ int main(int argc, char** argv) {
     sys.AddObject(&stream1);
     stream1.sys(&sys);
     draw::SysView view(&sys, &ren);
-
+    
     // start up the main loop
     SDL_Event ev;
     sdl::Timer timer;
