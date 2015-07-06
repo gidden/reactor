@@ -70,7 +70,7 @@ class SysView {
  public:
    SysView(const phys::System* sys, sdl::Renderer* ren) : sys_(sys), ren_(ren) {
     LoadFont(&font_);
-    sdl::Bar::Rect rec_p{840, 0, 10, 650};
+    sdl::Bar::Rect rec_p{650, 0, 10, 650};
     palette_ = sdl::Bar(rec_p, sdl::Color::white());
     bg_color_ = sdl::Color::black();
     neut_color_ = sdl::Color::red();
